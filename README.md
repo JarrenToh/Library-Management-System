@@ -24,6 +24,7 @@ This is a library management system built using Java and the NetBeans IDE. The s
 ### Installation:
 
 To install the library management system, follow these steps:
+
     1. Clone this repository to your local machine.
     2. Open the project in the NetBeans IDE.
     3. Add in frameworks.
