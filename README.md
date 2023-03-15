@@ -2,23 +2,27 @@
 This is a library management system built using Java and the NetBeans IDE. The system provides functionalities for managing books, staffs and members in a library.
 
 ## Table of Contents:
-System Requirement
-Web Application Framework
-Installation
-Usage
-Contributing
+
+    System Requirement
+    Web Application Framework
+    Installation
+    Usage
+    Contributing
 
 ### System Requirement:
+
     1. Java Platform, Standard Edition, Development Kit (JDK) 8
     2. GlassFish v5.1.0 (should work with older versions of GlassFish)
     3. NetBeans IDE v12.0
     4. 2 GB RAM
 
 ### Web Application Framework:
+
     1. JavaServer Faces 2.3
     2. PrimeFaces v8.0
 
 ### Installation:
+
 To install the library management system, follow these steps:
     1. Clone this repository to your local machine.
     2. Open the project in the NetBeans IDE.
@@ -26,9 +30,11 @@ To install the library management system, follow these steps:
     3. Build and run the project.
 
 ### Usage:
+
 Once the project is running, you can use the system to manage books, staffs and members in a library. 
 
 Use Cases:
+
     1. Login: Staff must be currently logged into the system to perform all other use cases.
         Accessible on login.xhtml
 
@@ -48,6 +54,7 @@ Use Cases:
         Accessible on left navigation bar (default.xhtml)
 
 Additional Use Cases/ Functionality:
+
     1. Dynamic Images: The system can retrieve and display images from the database for books, members, and staff.
     2. Staff Management: Staff members can update their first name, last name, and password.
     3. Book Search: Books can be searched by title, ISBN, and author.
@@ -65,6 +72,7 @@ To get started, log in to the system using the default username and password:
 
 ### Contributing:
 If you would like to contribute to the library management system, please follow these guidelines:
+
     1. Fork the repository.
     2. Create a new branch.
     3. Make your changes.
@@ -74,6 +82,7 @@ If you would like to contribute to the library management system, please follow 
 NOTE: The MySQL database has been updated to allow storage of images, which can now be accessed and utilized for the entities "Book", "Member", and "Staff" within the system. This modification enables the system to store images as a part of the data associated with each of these entities, providing greater flexibility and functionality for managing image data within the database.
 
 To test the fine amount feature in the library management system using MySQL Workbench, follow these steps:
+
     1. Open MySQL Workbench and connect to the database where the library management system is stored.
 
     2. In the query editor, enter the following code:
