@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/default.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        Member Profile
+    </ui:define>
+
+    <ui:define name="content">
+        <f:metadata>
+
+            <f:viewParam name="memberId" value="#{memberManagedBean.memberId}" />
+            <!-- load the selected member -->
+            <f:event type="preRenderView" listener="#{memberManagedBean.loadSelectedMember()}"/>
+        </f:metadata>
+
+        <h:form id="form">
+            <p:growl id="growl" showDetail="true" life="3000" widgetVar="growl"/>
+            <p:layout style="width:calc(100vw - 320px);height:100%;">
+
+                <p:layoutUnit position="east" size="30%" resizable="true" style="display:flex;align-items:center;min-height:25%;">
+                    <p:graphicImage value="#{memberManagedBean.profileImage}" cache="false" style="display:block;margin:auto;width:80%;margin-top:25px;"/>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center" resizable="true" style="display:flex!important;justify-content:center!important;align-items:center!important;min-height:25%;">
+                    <p:panel header="Member Information" style="border-width:0.5px;margin-top:40px;border:none;">
+                        <p:panelGrid columns="2" style="width: 100%;" >
+
+                            <p:outputLabel for="firstName" value="First Name:" />
+                            <p:inputText id="firstName" value="#{memberManagedBean.firstName}" style="width: 100%;" disabled="true"/>
+
+                            <p:outputLabel for="lastName" value="Last Name:" />
+                            <p:inputText id="lastName" value="#{memberManagedBean.lastName}" style="width: 100%;" disabled="true"/>
+
+                            <p:outputLabel for="gender" value="Gender:" />
+                            <p:inputText id="gender" value="#{memberManagedBean.gender}" style="width: 100%;" disabled="true"/>
+
+                            <p:outputLabel for="age" value="Age:" />
+                            <p:inputText id="age" value="#{memberManagedBean.age}" style="width: 100%;" disabled="true"/>
+                            
+                            <p:outputLabel for="identityNo" value="Identity Number:" />
+                            <p:inputText id="identityNo" value="#{memberManagedBean.identityNo}" style="width: 100%;" disabled="true"/>
+                            
+                            <p:outputLabel for="phone" value="Phone:" />
+                            <p:inputText id="phone" value="#{memberManagedBean.phone}" style="width: 100%;" disabled="true"/>
+
+                            <p:outputLabel for="address" value="Address:" />
+                            <p:inputText id="address" value="#{memberManagedBean.address}" style="width: 100%;" disabled="true"/>
+
+                        </p:panelGrid>
+                    </p:panel>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="70%" resizable="true" style="min-height:70%;border:none">
+
+                    <p:dataTable widgetVar="lendAndReturnTable" var="lendAndReturn" value="#{memberManagedBean.lendAndReturns}"
+                                 style="table-layout: fixed;width:calc(100vw - 330px)" 
+                                 scrollable="true" resizableColumns="true"
+                                 emptyMessage="No Lend and Return Record Found!">
+                        <f:facet name="header">
+                            Lend And Return Details
+                        </f:facet>
+                        <p:column headerText="Lend ID">
+                            <h:outputText value="#{lendAndReturn.lendId}" />
+                        </p:column>
+
+                        <p:column headerText="Member ID">
+                            <h:outputText value="#{lendAndReturn.memberId}" />
+                        </p:column>
+
+                        <p:column headerText="Member Identity Number">
+                            <h:outputText value="#{lendAndReturn.member.identityNo}" />
+                        </p:column>
+
+                        <p:column headerText="Book ID">
+                            <h:outputText value="#{lendAndReturn.bookId}" />
+                        </p:column>
+
+                        <p:column headerText="Book Title">
+                            <h:outputText value="#{lendAndReturn.book.title}" />
+                        </p:column>
+
+                        <p:column headerText="Lend Date">
+                            <h:outputText value="#{lendAndReturn.lendDate}">
+                                <f:convertDateTime pattern="yyyy-MM-dd HH:mm" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Return Date">
+                            <h:outputText value="#{lendAndReturn.returnDate}">
+                                <f:convertDateTime pattern="yyyy-MM-dd HH:mm" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Fine Amount">
+                            <h:outputText value="#{lendAndReturn.fineAmount}" />
+                        </p:column>
+
+
+                    </p:dataTable>
+
+                </p:layoutUnit>
+            </p:layout>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

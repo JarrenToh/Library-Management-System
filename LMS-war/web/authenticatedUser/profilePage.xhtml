@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/default.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:define name="title">
+        Staff Profile
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+
+            <p:layout style="width:calc(100vw - 310px);height:100%;">
+
+                <p:layoutUnit position="center" style="height:100%;width:100%;border:none;padding-top: 40px" resizable="true">
+                    <p:growl id="growl" showDetail="true" life="3000"/>
+                    <p:graphicImage value="#{authenticationManagedBean.profileImage}" cache="false" style="margin: auto; display: block;margin-bottom: 20px; width: 15%;"/>
+                    <p:panel header="Personal Information" style="border-width: 2px">
+
+                        <p:panelGrid columns="2" style="width: 100%;" >
+
+                            <p:outputLabel for="firstName" value="First Name:" />
+                            <p:inputText id="firstName" value="#{authenticationManagedBean.firstName}" style="width: 100%;"/>
+
+                            <p:outputLabel for="lastName" value="Last Name:" />
+                            <p:inputText id="lastName" value="#{authenticationManagedBean.lastName}" style="width: 100%;"/>
+
+                            <p:outputLabel for="email" value="Email:" />
+                            <p:inputText id="email" value="librarian@OrchardRoad.Sg" style="width: 100%;" disabled="true"/>
+
+                            <p:outputLabel for="user" value="Username:" />
+                            <p:inputText id="user" value="#{authenticationManagedBean.username}" style="width: 100%;" disabled="true"/>
+
+                            <p:outputLabel for="password" value="password:" />
+                            <p:password id="password" value="#{authenticationManagedBean.password}" style="width: 100%;"/>
+
+                        </p:panelGrid>
+                    </p:panel>
+
+                    <p:panel header="Job Information" style="border-width: 2px">
+                        <p:panelGrid columns="2" style="width: 100%;">
+
+                            <p:outputLabel for="jobTitle" value="Job Title" />
+                            <p:inputText id="jobTitle" value="Senior Librarian" style="width: 100%;" disabled="true"/>
+
+                            <p:outputLabel for="department" value="Department" />
+                            <p:inputText id="department" value="Orchard Road" style="width: 100%;" disabled="true"/>
+
+                            <p:outputLabel for="hireDate" value="Hire Date" />
+                            <p:calendar id="hireDate" value="14/02/1998" style="border-width: 100px;" disabled="true"/>
+
+                            <p:outputLabel for="salary" value="Salary" />
+                            <p:inputText id="salary" value="$4500" style="width: 100%;" disabled="true"/>
+
+                        </p:panelGrid>
+                    </p:panel>
+
+
+                    <p:commandButton value="Save" action="#{authenticationManagedBean.save()}" update="growl" />
+                    <p:button value="Cancel" outcome="/authenticatedUser/bookSearch.xhtml"/>
+                    
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

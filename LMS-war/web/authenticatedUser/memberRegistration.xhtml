@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/default.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        Member Registration
+
+        <style>
+            body {
+                background-image: url('resources/images/background.jpg');
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+
+            .centered {
+                height: 800px!important;
+                margin:auto;
+                width:20%;
+                border: 1px solid #ccc!important;
+                padding: 20px;
+                margin-top: calc(50vh - 160px) !important;
+                background-color: #ffffff!important;
+                box-shadow: 5px 5px 5px;/*
+
+            }*/
+                .ui-layout-container.backgroundless .ui-widget-content {
+                    background: none;
+                    border: none;
+                }
+
+            </style>
+        </ui:define>
+
+        <ui:define name="content">
+
+            <h:form id="form" enctype="multipart/form-data">
+
+                <p:layout style="width:calc(100vw - 310px);height:100%;">
+                    <p:growl id="growl" showDetail="true" life="3000"/>
+                    <p:layoutUnit position="center" style="height:100%;width:100%;border:none;" resizable="true">
+
+                        <p:panel id= "panel" header="Register Member" style="height:430px" >
+                                <h:panelGrid id="grid" columns="4" cellpadding="5">
+                                    <p:outputLabel for="firstName" value="First Name:" />
+                                    <p:inputText id="firstName" value="#{memberManagedBean.firstName}" required="true" label="First Name"/>
+                                    <p:message for="firstName" />
+                                    <h:outputText value="#{memberManagedBean.firstName}" />
+
+                                    <p:outputLabel for="lastName" value="Last Name:" />
+                                    <p:inputText id="lastName" value="#{memberManagedBean.lastName}" required="true"/>
+                                    <p:message for="lastName" />
+                                    <h:outputText value="#{memberManagedBean.lastName}" />
+
+
+                                    <p:outputLabel for="gender" value="Gender: " />
+                                    <p:selectOneMenu id="gender" value="#{memberManagedBean.gender}" required="true">
+                                        <f:selectItem itemValue = 'F' itemLabel = "Female" />
+                                        <f:selectItem itemValue = 'M' itemLabel = "Male" />
+                                    </p:selectOneMenu>
+                                    <p:message for="gender" />
+                                    <h:outputText value="#{memberManagedBean.gender}" />
+
+
+                                    <p:outputLabel for="age" value="Age: " />
+                                    <p:inputText id="age" value="#{memberManagedBean.age}" required="true"/>
+                                    <p:message for="age" />
+                                    <h:outputText value="#{memberManagedBean.age}" />
+
+                                    <p:outputLabel for="idNo" value="Identity Number (NRIC/FIN): " />
+                                    <p:inputText id="idNo" value="#{memberManagedBean.identityNo}" required="true"/>
+                                    <p:message for="idNo" />
+                                    <h:outputText value="#{memberManagedBean.identityNo}" />
+
+                                    <p:outputLabel for="phone" value="Phone Number: " />
+                                    <p:inputText id="phone" value="#{memberManagedBean.phone}"/>
+                                    <p:message for="phone" />
+                                    <h:outputText value="#{memberManagedBean.phone}" />
+
+                                    <p:outputLabel for="address" value="Address: " />
+                                    <p:inputText id="address" value="#{memberManagedBean.address}" />
+                                    <p:message for="address" />
+                                    <h:outputText value="#{memberManagedBean.address}" />
+
+                                    <h:outputLabel for="file" value="Select file: " />
+                                    <p:fileUpload id="file" listener="#{memberManagedBean.handleFileUpload}" mode="simple" accept=".jpeg,.jpg"
+                                                  sizeLimit="20971520"/>
+                                    <p:message for="file" />
+                                    <h:outputText value="#{memberManagedBean.file}" />
+
+                                </h:panelGrid>
+
+                                <p:commandButton value="Register" action="#{memberManagedBean.registerMember()}" 
+                                                 update=":form" style="float:right;margin-top: 5px;"
+                                ajax="false"/>
+
+                            <p:button value="Cancel" outcome="/authenticatedUser/memberSearch.xhtml" style="float:right;margin-top: 5px;"/>
+                        </p:panel>
+                    </p:layoutUnit>
+                </p:layout>
+
+            </h:form>
+        </ui:define>
+
+    </ui:composition>

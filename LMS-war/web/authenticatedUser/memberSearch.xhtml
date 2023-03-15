@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/default.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:define name="title">
+        Member Search
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="form">
+
+            <p:layout style="width:calc(100vw - 310px);height:100%;">
+                <p:growl id="growl" showDetail="true" life="3000"/>
+
+                <p:layoutUnit position="center" style="height:100%;width:100%;border:none;" resizable="true">
+
+                    <p:commandButton icon="fa fa-fw fa-plus" value="Register Member" style="text-align:center;float:right;"
+                                     action="#{memberManagedBean.redirectMemberRegistration()}" ajax="false" title="Register Member"/>
+                  
+                    <p:outputPanel style="text-align: center; padding: 10px; font-size: 20px;">
+                        <h:outputText value="Search: " style="margin-right: 10px;"/>
+
+                        <p:inputText placeholder="Enter keywords"
+                                     value="#{memberManagedBean.searchString}">
+                            <p:ajax event="keyup" update="form"
+                                    listener="#{memberManagedBean.handleSearch}" />
+                        </p:inputText>
+
+                        <h:selectOneMenu value="#{memberManagedBean.searchType}" style="text-align: left; margin-left: 5px;  font-size: 17px;">
+                            <f:selectItem itemValue="FIRSTNAME" itemLabel="First Name" />
+                            <f:selectItem itemValue="IDENTITYNO" itemLabel="Identity Number" />
+                            <f:selectItem itemValue="PHONE" itemLabel="Phone Number" />
+                            <p:ajax listener="#{memberManagedBean.handleSearch}" update="form"/>
+                        </h:selectOneMenu>
+
+                    </p:outputPanel>
+
+
+                    <!-- bottom content here -->
+                    <p:dataTable widgetVar="membersTable" var="member" value="#{memberManagedBean.members}" 
+                                 style="table-layout: fixed;width:calc(100vw - 320px)" scrollable="true" 
+                                 resizableColumns="true" emptyMessage="Member Not Found!">
+                        <f:facet name="header">
+                            Members
+                        </f:facet>
+                        <p:column headerText="Member ID">
+                            <h:outputText value="#{member.memberId}" />
+                        </p:column>
+
+                        <p:column headerText="First Name">
+                            <h:outputText value="#{member.firstName}" />
+                        </p:column>
+
+                        <p:column headerText="Last Name">
+                            <h:outputText value="#{member.lastName}" />
+                        </p:column>
+
+                        <p:column headerText="Gender">
+                            <h:outputText value="#{member.gender}" />
+                        </p:column>
+
+                        <p:column headerText="Age">
+                            <h:outputText value="#{member.age}" />
+                        </p:column>
+
+                        <p:column headerText="Identity No">
+                            <h:outputText value="#{member.identityNo}" />
+                        </p:column>
+
+                        <p:column headerText="Phone No">
+                            <h:outputText value="#{member.phone}" />
+                        </p:column>
+
+                        <p:column headerText="Address">
+                            <h:outputText value="#{member.address}" />
+                        </p:column>
+
+                        <p:column headerText="Action">
+                            <p:button value="More Details" title="Member Details"
+                                      outcome="memberPage.xhtml">
+                                <f:param name="memberId" value="#{member.memberId}" />
+                            </p:button>
+                        </p:column>
+                        
+                    </p:dataTable>
+
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

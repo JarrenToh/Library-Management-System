@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/default.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="title">
+        Book Details 
+    </ui:define>
+
+    <ui:define name="content">
+        <f:metadata>
+
+            <f:viewParam name="bookId" value="#{bookManagedBean.bookId}" />
+            <!-- load the selected book -->
+            <f:event type="preRenderView" listener="#{bookManagedBean.loadSelectedBook()}"/>
+        </f:metadata>
+        <h:form id="form">
+            <p:growl id="growl" showDetail="true" life="3000" widgetVar="growl"/>
+            <p:layout style="width:calc(100vw - 320px);height:100%;">
+
+                <p:layoutUnit position="east" size="30%" resizable="true" style="display:flex;align-items:center;min-height:25%;">
+                    <p:graphicImage value="#{bookManagedBean.bookImage}" cache="false" style="display:block;margin:auto;width:30%;margin-top:25px;"/>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center" resizable="true" style="display:flex!important;justify-content:center!important;align-items:center!important;min-height:25%;">
+                    <p:panel header="Book Information" style="border-width:0.5px;margin-top:40px;border:none;">
+                        <p:panelGrid columns="2" style="width: 100%;" >
+
+                            <p:outputLabel for="bookid" value="Book ID:" />
+                            <p:inputText id="bookid" value="#{bookManagedBean.bookId}" style="width: 100%;" disabled="true"/>
+
+                            <p:outputLabel for="title" value="Title:" />
+                            <p:inputText id="title" value="#{bookManagedBean.title}" style="width: 100%;" disabled="true"/>
+
+                            <p:outputLabel for="isbn" value="ISBN:" />
+                            <p:inputText id="isbn" value="#{bookManagedBean.isbn}" style="width: 100%;" disabled="true"/>
+
+                            <p:outputLabel for="author" value="Author:" />
+                            <p:inputText id="author" value="#{bookManagedBean.author}" style="width: 100%;" disabled="true"/>
+
+                        </p:panelGrid>
+                    </p:panel>
+                    <p:commandButton value="Return Book" action="#{bookManagedBean.returnBook()}" update=":form"
+                                     style="float:right;margin-right:20px;" disabled="#{not bookManagedBean.availableForReturn()}"/><br/><br/>
+
+                    <h:outputText value="Fine amount is: $ #{bookManagedBean.fineAmount}" style="margin-left:20px"/>
+                    <p:commandButton value="Pay Fine" action="#{bookManagedBean.payFine()}" 
+                                     update=":form" disabled="#{bookManagedBean.noFineOutstanding()}" style="float:right;margin-right:20px;"/>
+
+
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="70%" resizable="true" style="min-height:70%;border:none">
+
+                    <p:dataTable widgetVar="lendAndReturnTable" var="lendAndReturn" value="#{bookManagedBean.lendAndReturns}"
+                                 style="table-layout: fixed;width:calc(100vw - 330px)" 
+                                 scrollable="true" resizableColumns="true"
+                                 emptyMessage="No Lend and Return Record Found!">
+                        <f:facet name="header">
+                            Lend And Return Details
+                        </f:facet>
+                        <p:column headerText="Lend ID">
+                            <h:outputText value="#{lendAndReturn.lendId}" />
+                        </p:column>
+
+                        <p:column headerText="Member ID">
+                            <h:outputText value="#{lendAndReturn.memberId}" />
+                        </p:column>
+
+                        <p:column headerText="Member Identity Number">
+                            <h:outputText value="#{lendAndReturn.member.identityNo}" />
+                        </p:column>
+
+                        <p:column headerText="Book ID">
+                            <h:outputText value="#{lendAndReturn.bookId}" />
+                        </p:column>
+
+                        <p:column headerText="Book Title">
+                            <h:outputText value="#{lendAndReturn.book.title}" />
+                        </p:column>
+
+                        <p:column headerText="Lend Date">
+                            <h:outputText value="#{lendAndReturn.lendDate}">
+                                <f:convertDateTime pattern="yyyy-MM-dd HH:mm" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Return Date">
+                            <h:outputText value="#{lendAndReturn.returnDate}">
+                                <f:convertDateTime pattern="yyyy-MM-dd HH:mm" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Fine Amount">
+                            <h:outputText value="#{lendAndReturn.fineAmount}" />
+                        </p:column>
+
+
+                    </p:dataTable>
+
+                </p:layoutUnit>
+            </p:layout>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/default.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:define name="title">
+        Home
+    </ui:define>
+
+    <ui:define name="content">
+
+        <!--Logged in User: #{authenticationManagedBean.staffId}-->
+        <h:form id="form">
+            <h:outputStylesheet library="css" name="cssLayout.css" />
+            <p:growl id="growl" showDetail="true" life="3000" widgetVar="growl"/>
+            <p:layout style="width:calc(100vw - 310px);height:100%;">
+
+                <p:layoutUnit position="center" style="height:100%;width:100%;border:none;" resizable="true">
+                    <!--<p:button value="Checkout!"  style="text-align:center;float:right;" outcome="checkoutPage.xhtml" title="Checkout Books"/>-->
+
+                    <p:outputPanel style="text-align: center; padding: 10px; font-size: 20px;">
+                        <h:outputText value="Search: " style="margin-right: 10px;"/>
+
+                        <p:inputText placeholder="Enter keywords"
+                                     value="#{bookManagedBean.searchString}">
+                            <p:ajax event="keyup" update="form"
+                                    listener="#{bookManagedBean.handleSearch}" />
+                        </p:inputText>
+
+                        <h:selectOneMenu value="#{bookManagedBean.searchType}" style="text-align: left; margin-left: 5px;  font-size: 17px;">
+                            <f:selectItem itemValue="TITLE" itemLabel="Title" />
+                            <f:selectItem itemValue="ISBN" itemLabel="ISBN" />
+                            <f:selectItem itemValue="AUTHOR" itemLabel="Author" />
+                            <p:ajax listener="#{bookManagedBean.handleSearch}" update=":form"/>
+                        </h:selectOneMenu>
+
+                    </p:outputPanel>
+
+                    <!-- bottom content here -->
+                    <p:dataTable id="dataTable" widgetVar="booksTable" var="book" value="#{bookManagedBean.books}"
+                                 style="table-layout: fixed;width:calc(100vw - 320px)" 
+                                 scrollable="true" resizableColumns="true" emptyMessage="No Book Found!">
+
+
+                        <f:facet name="header">
+                            Books
+                        </f:facet>
+
+                        <p:column headerText="Book ID" >
+                            <h:outputText value="#{book.bookId}" />
+                        </p:column>
+
+                        <p:column headerText="Title" >
+                            <h:outputText value="#{book.title}" />
+                        </p:column>
+
+                        <p:column headerText="ISBN" >
+                            <h:outputText value="#{book.isbn}" />
+                        </p:column>
+
+                        <p:column headerText="Author" >
+                            <h:outputText value="#{book.author}" />
+                        </p:column>
+
+                        <p:column headerText="Action" style="display:flex;justify-content: center;border:none">
+                            <p:commandButton value="Borrow"
+                                             update=":form:bookConfirmation" oncomplete="PF('bookDialog').show()" 
+                                             title="Borrow Book" style="margin-right: 25%" disabled="#{not bookManagedBean.isAvailable(book)}">
+                                <f:setPropertyActionListener value="#{book}"
+                                                             target="#{bookManagedBean.selectedBook}" />
+                            </p:commandButton>
+                            <p:button value="More Details" title="Book Details"
+                                      outcome="bookPage.xhtml">
+                                <f:param name="bookId" value="#{book.bookId}" />
+                            </p:button>
+                        </p:column>
+                    </p:dataTable>
+
+                    <p:dialog header="Borrow Book Confirmation" widgetVar="bookDialog" modal="false" showEffect="fade" hideEffect="fade" resizable="false">
+
+                        <p:outputPanel id="bookConfirmation">
+                            <p:panelGrid columns="2" rendered="#{not empty bookManagedBean.selectedBook}">
+                                <h:outputText value="Book selected: " />
+                                <h:outputText value="#{bookManagedBean.selectedBook.title}" />
+
+                                <h:outputText value="Enter Member Identity Number: " />
+                                <h:inputText value="#{bookManagedBean.memberId}" />
+
+                            </p:panelGrid>
+                            <p:commandButton value="Cancel"
+                                             update=":form:dataTable" 
+                                             oncomplete="PF('bookDialog').hide()" 
+                                             title="Cancel" style="float:right"/>
+                            <p:commandButton value="Borrow"
+                                             update=":form:dataTable"
+                                             action="#{bookManagedBean.createLending}"
+                                             oncomplete="if (args &amp;&amp; !args.validationFailed &amp;&amp; !args.error) { PF('bookDialog').hide(); } else { PF('growl').show([{ severity: 'error', summary: 'User does not exist!', detail: 'Identity Number Not Found'}]); }" 
+                                             title="Borrow Book" style="float:right"
+                                             />
+                        </p:outputPanel>
+                    </p:dialog>
+
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
