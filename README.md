@@ -3,11 +3,11 @@ This is a library management system built using Java and the NetBeans IDE. The s
 
 ## Table of Contents:
 
-### System Requirement
-### Web Application Framework
-### Installation
-### Usage
-### Contributing
+### - System Requirement
+### - Web Application Framework
+### - Installation
+### - Usage
+### - Contributing
 
 ### System Requirement:
 
